@@ -1,0 +1,31 @@
+# Global ignore rules
+__pycache__/
+*.py[cod]
+*.so
+*.dylib
+*.egg-info/
+*.egg
+build/
+dist/
+.eggs/
+
+# Environment & tooling
+.env
+.env.local
+.venv/
+.venv*/
+*.code-workspace
+.vscode/
+.idea/
+.pytest_cache/
+.coverage*
+htmlcov/
+.mypy_cache/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Project-specific outputs
+CostEstimateGenerator/outputs/*
+!CostEstimateGenerator/outputs/.gitignore
