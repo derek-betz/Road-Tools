@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-import pandas as pd
+import pytest
+
+pd = pytest.importorskip("pandas")
 
 from costest.io import extract_price_series
 
