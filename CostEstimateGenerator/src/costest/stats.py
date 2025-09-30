@@ -5,7 +5,12 @@ import math
 from dataclasses import dataclass
 from typing import Iterable, Sequence
 
-import numpy as np
+try:  # pragma: no cover - exercised via fallback in tests
+    import numpy as np
+except ModuleNotFoundError:  # pragma: no cover - triggered in constrained envs
+    np = None  # type: ignore[assignment]
+
+import statistics
 
 MEAN_FLOOR = 1e-6
 
@@ -54,14 +59,18 @@ def to_float_sequence(values: Iterable[float]) -> Sequence[float]:
 def mean(values: Sequence[float]) -> float:
     if not values:
         return 0.0
-    return float(np.mean(values))
+    if np is not None:
+        return float(np.mean(values))
+    return float(statistics.mean(values))
 
 
 def std_dev(values: Sequence[float]) -> float:
     n = len(values)
     if n <= 1:
         return 0.0
-    return float(np.std(values, ddof=1))
+    if np is not None:
+        return float(np.std(values, ddof=1))
+    return float(statistics.stdev(values))
 
 
 def coefficient_of_variation(mean_value: float, std_value: float) -> float:

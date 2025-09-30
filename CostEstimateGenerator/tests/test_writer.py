@@ -4,9 +4,10 @@ import shutil
 from pathlib import Path
 from types import SimpleNamespace
 
-import pandas as pd
 import pytest
 from openpyxl import load_workbook
+
+pd = pytest.importorskip("pandas")
 
 from costest.cli import run
 from costest.config import load_config
