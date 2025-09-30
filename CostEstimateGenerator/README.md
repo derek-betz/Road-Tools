@@ -22,6 +22,21 @@ external services.
 - Supports `--dry-run` mode and optional AI assistance that can be disabled
   via CLI flags or the `DISABLE_OPENAI=1` environment variable.
 
+## Project inputs
+
+Place the project-level spreadsheets exported from the front end in
+`data_sample/` (or pass explicit paths via `--project-quantities` and
+`--project-attributes`):
+
+- `*_project_quantities.xlsx` lists the pay items included in the job.
+- `project_attributes.xlsx` contains the anticipated contract cost and district
+  location used to enrich the debug output.
+- `BidTabsData/` holds historical bid tab exports (legacy `.xls` files) that
+  supply the price history used when computing statistics.
+
+When present, the CLI automatically loads these files and attaches the metadata
+to the mapping report.
+
 ## Quick start
 
 ```bash
@@ -39,17 +54,20 @@ python scripts/prepare_sample_outputs.py
 
 The script copies the CSV audit sample and materialises Excel workbooks from
 `data_sample/Estimate_Draft_template.csv` and
-`data_sample/payitems_workbook.json` into the `outputs/` directory. With those
-files in place, run the pipeline against the samples:
+`data_sample/payitems_workbook.json` into the `outputs/` directory. The sample
+project spreadsheets `data_sample/2300946_project_quantities.xlsx` and
+`data_sample/project_attributes.xlsx` mirror the front-end payload.
+With those files in place, run the pipeline against the samples:
 
 ```bash
 python -m costest.cli \
-  --input-payitems data_sample/payitems \
   --payitems-workbook outputs/PayItems_Audit.xlsx \
   --estimate-audit-csv outputs/Estimate_Audit.csv \
   --estimate-xlsx outputs/Estimate_Draft.xlsx
 ```
 
+Override any input via the matching CLI flags (for example,
+`--project-quantities data_sample/2300946_project_quantities.xlsx`).
 When run without explicit paths the CLI looks for `outputs/PayItems_Audit.xlsx`
 and falls back to the bundled sample workbook or to a `data_in/` directory if
 present. Supply `--mapping-debug-csv` to write the mapping report to a custom
@@ -80,13 +98,13 @@ Continuous integration runs the same command on every push via GitHub Actions.
 
 ```
 CostEstimateGenerator/
-├── src/costest/                # Library code
-├── data_sample/                # Synthetic sample inputs
-├── outputs/                    # Target directory for generated outputs
-├── scripts/run_pipeline.py     # CLI wrapper
-├── tests/                      # Pytest-based unit and integration tests
-├── requirements.txt            # Reproducible dependency pins
-└── pyproject.toml              # Packaging metadata
++-- src/costest/                # Library code
++-- data_sample/                # Synthetic sample inputs
++-- outputs/                    # Target directory for generated outputs
++-- scripts/run_pipeline.py     # CLI wrapper
++-- tests/                      # Pytest-based unit and integration tests
++-- requirements.txt            # Reproducible dependency pins
++-- pyproject.toml              # Packaging metadata
 ```
 
 The project is designed to be idempotent: running the pipeline multiple times
