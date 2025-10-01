@@ -6,6 +6,20 @@ into version control to support the tests. They have been removed in favour of
 deterministic factories that generate the documents on demand using helper
 functions.
 
+## Requirements
+
+### Software Requirements
+- **Python**: 3.9 or higher (recommended 3.11+)
+- **pip**: Python package installer (typically included with Python)
+
+### Python Package Dependencies
+The following packages are required (typically installed at the repository root level):
+- `openpyxl` - Excel file reading/writing (.xlsx format)
+- `python-docx` - Word document processing (.docx format)
+- `pytest` - Testing framework (for running tests)
+
+These dependencies are shared with other tools in the repository and can be installed from the root-level requirements or via the individual project setup commands.
+
 ## Generating example documents
 
 Use the convenience script to create fresh examples inside

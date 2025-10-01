@@ -2,6 +2,33 @@
 
 A Python CLI for validating and packaging INDOT roadway plan submittals. Built with Typer, Pydantic, Rich, and other modern libraries.
 
+## Requirements
+
+### Software Requirements
+- **Python**: 3.11 or higher
+- **pip**: Python package installer (typically included with Python)
+
+### Python Package Dependencies
+The following packages are automatically installed when you set up the project:
+- `typer[all]` - CLI framework
+- `pydantic>=1.10` - Data validation
+- `rich>=13` - Terminal formatting
+- `PyPDF2>=3` - PDF manipulation
+- `pdfminer.six>=20221105` - PDF text extraction
+- `jinja2>=3` - Template engine
+- `python-docx>=0.8` - Word document processing
+- `pyyaml>=6` - YAML configuration files
+- `tomli>=2` - TOML file parsing
+- `pathspec>=0.11` - Path matching
+- `loguru>=0.7` - Logging
+
+### Optional Dependencies
+- `pytest` - For running tests
+- `pytest-cov` - For test coverage reports
+
+### System Dependencies
+- **Windows users**: May need Microsoft C++ Build Tools if `python-docx` fails to build
+
 ## Quickstart
 
 ```bash

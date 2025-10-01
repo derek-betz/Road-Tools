@@ -6,6 +6,29 @@ place. The project ships with synthetic sample data that demonstrate the
 expected file layout and allow the pipeline to be exercised end-to-end without
 external services.
 
+## Requirements
+
+### Software Requirements
+- **Python**: 3.9 or higher
+- **pip**: Python package installer (typically included with Python)
+
+### Python Package Dependencies
+The following packages are installed via `requirements.txt` or `pyproject.toml`:
+- `numpy==1.26.4` - Numerical computing
+- `pandas==1.5.3` - Data analysis and manipulation
+- `openpyxl==3.1.2` - Excel file reading/writing
+- `python-dotenv==1.0.0` - Environment variable management
+- `xlrd==2.0.1` - Legacy Excel file reading
+- `openai>=1.0.0,<2.0.0` - AI assistance (optional, can be disabled)
+- `reportlab>=4.0.0,<5.0.0` - PDF generation
+- `PyPDF2==3.0.1` - PDF manipulation
+- `pytest==7.4.4` - Testing framework
+
+### Optional Features
+- **OpenAI API**: To enable AI-assisted item mapping, you need:
+  - An OpenAI API key (set via `OPENAI_API_KEY` environment variable or in `API_KEY/API_KEY.txt`)
+  - Can be disabled with `DISABLE_OPENAI=1` environment variable or `--disable-ai` flag
+
 ## Features
 
 - Reads historical price data from Excel workbooks (sheet-per-item) and from
