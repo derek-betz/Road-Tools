@@ -2,9 +2,16 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
-from commitments_reconciler.factories import (
+# Add commitments-reconciler folder to path so commitments_reconciler is importable
+SCRIPT_DIR = Path(__file__).resolve().parent
+COMMITMENTS_RECONCILER_ROOT = SCRIPT_DIR.parent
+if str(COMMITMENTS_RECONCILER_ROOT) not in sys.path:
+    sys.path.insert(0, str(COMMITMENTS_RECONCILER_ROOT))
+
+from commitments_reconciler.factories import (  # noqa: E402 - path patched above
     create_sample_commitments_workbook,
     create_sample_environment_doc,
 )
