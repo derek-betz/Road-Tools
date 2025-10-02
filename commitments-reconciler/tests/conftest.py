@@ -5,7 +5,9 @@ from pathlib import Path
 
 import pytest
 
-ROOT = Path(__file__).resolve().parents[2]
+# Point to the 'commitments-reconciler' folder so that 'commitments_reconciler'
+# (which now lives inside it) is importable without installation.
+ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
