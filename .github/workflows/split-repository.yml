@@ -1,0 +1,74 @@
+name: Split Repository
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "yes" to confirm the repository split'
+        required: true
+        type: string
+
+jobs:
+  split-repositories:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.confirm == 'yes'
+    
+    steps:
+      - name: Checkout Road-Tools
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+      
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+      
+      - name: Clone and populate CostEstimateGenerator
+        env:
+          GH_TOKEN: ${{ secrets.SPLIT_REPO_TOKEN }}
+        run: |
+          git clone https://x-access-token:${GH_TOKEN}@github.com/derek-betz/CostEstimateGenerator.git /tmp/CostEstimateGenerator
+          cd /tmp/CostEstimateGenerator
+          cp -r $GITHUB_WORKSPACE/CostEstimateGenerator/* .
+          cp $GITHUB_WORKSPACE/CostEstimateGenerator/.gitignore .
+          cp -r $GITHUB_WORKSPACE/CostEstimateGenerator/.github .
+          git add .
+          git commit -m "Initial commit - extracted from Road-Tools monorepo"
+          git push -u origin main
+      
+      - name: Clone and populate submittal-packager
+        env:
+          GH_TOKEN: ${{ secrets.SPLIT_REPO_TOKEN }}
+        run: |
+          git clone https://x-access-token:${GH_TOKEN}@github.com/derek-betz/submittal-packager.git /tmp/submittal-packager
+          cd /tmp/submittal-packager
+          cp -r $GITHUB_WORKSPACE/submittal-packager/* .
+          cp $GITHUB_WORKSPACE/submittal-packager/.gitignore .
+          cp -r $GITHUB_WORKSPACE/submittal-packager/.github .
+          git add .
+          git commit -m "Initial commit - extracted from Road-Tools monorepo"
+          git push -u origin main
+      
+      - name: Clone and populate commitments-reconciler
+        env:
+          GH_TOKEN: ${{ secrets.SPLIT_REPO_TOKEN }}
+        run: |
+          git clone https://x-access-token:${GH_TOKEN}@github.com/derek-betz/commitments-reconciler.git /tmp/commitments-reconciler
+          cd /tmp/commitments-reconciler
+          cp -r $GITHUB_WORKSPACE/commitments-reconciler/* .
+          cp $GITHUB_WORKSPACE/commitments-reconciler/.gitignore .
+          cp -r $GITHUB_WORKSPACE/commitments-reconciler/.github .
+          git add .
+          git commit -m "Initial commit - extracted from Road-Tools monorepo"
+          git push -u origin main
+      
+      - name: Verify split completion
+        run: |
+          echo "✅ Repository split completed successfully!"
+          echo ""
+          echo "The following repositories have been populated:"
+          echo "  - https://github.com/derek-betz/CostEstimateGenerator"
+          echo "  - https://github.com/derek-betz/submittal-packager"
+          echo "  - https://github.com/derek-betz/commitments-reconciler"
