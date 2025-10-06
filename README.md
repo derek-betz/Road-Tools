@@ -1,33 +1,26 @@
 # Road-Tools
 
-A collection of tools for INDOT roadway engineering processes.
+This repository has been split into separate repositories for better modularity and maintenance. Each application now has its own dedicated repository:
 
-## Repository Structure
+## Individual Repositories
 
-This repository follows a **one process per folder** principle. Each top-level directory contains a self-contained tool or process with its own:
+- **[CostEstimateGenerator](CostEstimateGenerator/)** - Ingests historical pay-item pricing data, computes summary statistics, and updates estimate workbooks
+- **[submittal-packager](submittal-packager/)** - Python CLI for validating and packaging INDOT roadway plan submittals
+- **[commitments-reconciler](commitments-reconciler/)** - Integration tests and utilities for commitments reconciliation
+
+Each application directory is now self-contained with:
 - README with setup and usage instructions
 - Dependencies and requirements
 - Tests and documentation
 - Configuration files
+- LICENSE file
+- GitHub Actions CI/CD workflows
 
-### Current Tools
+## Migration Note
 
-- **[CostEstimateGenerator](CostEstimateGenerator/README.md)** - Ingests historical pay-item pricing data, computes summary statistics, and updates estimate workbooks
-- **[submittal-packager](submittal-packager/README.md)** - Python CLI for validating and packaging INDOT roadway plan submittals
-- **[commitments-reconciler](commitments-reconciler/README.md)** - Integration tests and utilities for commitments reconciliation
+Each folder in this repository can be extracted into its own standalone repository. All necessary files (LICENSE, .gitignore, .github/workflows, etc.) have been added to make each application fully independent.
 
-## Adding New Processes
-
-When adding a new tool or process to this repository:
-
-1. Create a new top-level directory for your process
-2. Include a comprehensive README.md with:
-   - Description of the process
-   - Requirements (software, dependencies)
-   - Installation/setup instructions
-   - Usage examples
-   - Testing instructions
-3. Keep the process self-contained with its own dependencies
-4. Follow the established patterns from existing tools
-
-This structure ensures that each process remains independent, maintainable, and easy to understand.
+To extract an application into its own repository:
+1. Copy the application folder (e.g., `CostEstimateGenerator/`)
+2. Initialize a new git repository in that folder
+3. The application is ready to use as a standalone repository
