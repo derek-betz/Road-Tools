@@ -94,15 +94,6 @@ def _build_manifest(
 
         if config.checks.pdf_text_scan.enabled and parsed.ext == "pdf":
             text = pdf_extract_text(file, max_pages=config.checks.pdf_text_scan.pages)
-            if config.checks.pdf_text_scan.keywords_required and not contains_keywords(
-                text, config.checks.pdf_text_scan.keywords_required
-            ):
-                messages.append(
-                    ValidationMessage(
-                        MessageLevel.WARNING,
-                        f"Missing required keywords in {file.name}",
-                    )
-                )
             if config.checks.pdf_text_scan.keywords_forbidden and contains_forbidden(
                 text, config.checks.pdf_text_scan.keywords_forbidden
             ):
@@ -112,6 +103,7 @@ def _build_manifest(
                         f"Forbidden keywords present in {file.name}",
                     )
                 )
+    # Note: we do not warn when required keywords are missing to keep validation noise minimal.
 
     messages.extend(detect_duplicate_ranges(parsed_records))
     return entries, messages

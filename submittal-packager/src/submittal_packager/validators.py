@@ -70,9 +70,13 @@ def parse_filename(path: Path, config: Config) -> Tuple[ParsedFilename | None, L
 
     data = match.groupdict()
     parsed = ParsedFilename(source=path)
+    # Populate simple fields directly from regex groups, but skip 'sheet_range'
+    # because we convert it into numeric sheet_start/sheet_end below.
     for field in _FILENAME_FIELDS:
+        if field == "sheet_range":
+            continue
         if field in data:
-            setattr(parsed, field if field != "sheet_range" else "sheet_range", data[field])
+            setattr(parsed, field, data[field])
 
     if parsed.ext and parsed.ext.lower() not in config.conventions.allowed_extensions:
         messages.append(ValidationMessage(MessageLevel.ERROR, f"Extension '{parsed.ext}' is not allowed"))

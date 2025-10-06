@@ -64,7 +64,7 @@ def normalize_item_code(x: str) -> str:
         return f"{digits[:3]}-{digits[3:]}"
 
     # Fallback cleanup
-    s = s.upper().strip()
+    s = s.strip()
     for bad_dash in ("\u2014", "\u2013", "\u2012", "\u2011", "\u2212"):
         s = s.replace(bad_dash, "-")
     s = re.sub(r"[^\w\-]", "", s)

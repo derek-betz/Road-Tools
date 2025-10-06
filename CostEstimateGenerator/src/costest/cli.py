@@ -2,7 +2,7 @@ import os
 import math
 import argparse
 from pathlib import Path
-from typing import Dict, Optional, Sequence, List
+from typing import Dict, Optional, Sequence, List, TYPE_CHECKING
 
 import pandas as pd
 from dotenv import load_dotenv
@@ -22,6 +22,8 @@ from .ai_reporter import generate_alternate_seek_report
 from .reporting import make_summary_text
 from . import reference_data
 from .ai_process_report import generate_process_improvement_report
+if TYPE_CHECKING:
+    from .config import CLIConfig
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 DEFAULT_DATA_DIR = BASE_DIR / "data_sample"
@@ -231,7 +233,24 @@ def load_project_attributes(
     return expected_cost, project_region, region_map_df
 
 
-def run() -> None:
+def run(config: Optional["CLIConfig"] = None) -> int:
+    # If test-provided config is supplied, override output paths for this run only.
+    prev_output_dir = OUTPUT_DIR
+    prev_out_xlsx = OUT_XLSX
+    prev_out_audit = OUT_AUDIT
+    prev_out_pay_audit = OUT_PAYITEM_AUDIT
+    if config is not None:
+        # Defer import to avoid circular at module import
+        try:
+            from .config import CLIConfig as _CLI
+            assert isinstance(config, _CLI)
+        except Exception:
+            pass
+        # Point outputs to the temp folder provided by tests
+        globals()["OUTPUT_DIR"] = config.estimate_audit_csv.parent
+        globals()["OUT_AUDIT"] = config.estimate_audit_csv
+        globals()["OUT_XLSX"] = config.estimate_xlsx
+        globals()["OUT_PAYITEM_AUDIT"] = config.payitems_workbook
     expected_contract_cost, project_region, region_map = load_project_attributes(
         PROJECT_ATTRS_XLSX,
         legacy_expected_path=LEGACY_EXPECTED_COST_XLSX or None,
@@ -260,7 +279,12 @@ def run() -> None:
 
     bid = _sanitize_bidtabs(bid)
 
-    qty_path = Path(QTY_PATH).expanduser().resolve() if QTY_PATH else find_quantities_file(QTY_FILE_GLOB, base_dir=BASE_DIR)
+    # Allow runtime override of quantities workbook via environment variable
+    _qty_override = os.getenv("QUANTITIES_XLSX", "").strip()
+    if _qty_override:
+        qty_path = Path(_qty_override).expanduser().resolve()
+    else:
+        qty_path = Path(QTY_PATH).expanduser().resolve() if QTY_PATH else find_quantities_file(QTY_FILE_GLOB, base_dir=BASE_DIR)
     qty = load_quantities(qty_path)
 
     if Path(ALIASES_CSV).exists():
@@ -634,6 +658,18 @@ def run() -> None:
 
     write_outputs(df, str(OUT_XLSX), str(OUT_AUDIT), payitem_details, str(OUT_PAYITEM_AUDIT))
 
+    # If running under tests, mirror mapping debug file to requested path
+    if config is not None:
+        try:
+            default_debug = OUTPUT_DIR / "payitem_mapping_debug.csv"
+            target_debug = config.mapping_debug_csv
+            if default_debug.exists():
+                import shutil
+                target_debug.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy(default_debug, target_debug)
+        except Exception:
+            pass
+
     print("\n=== SUMMARY ===\n")
     print(make_summary_text(df))
     print("\nInputs used:")
@@ -661,6 +697,15 @@ def run() -> None:
         print(" -", ai_report_path)
     if process_report_path:
         print(" -", process_report_path)
+
+    # Restore globals if we overrode them
+    if config is not None:
+        globals()["OUTPUT_DIR"] = prev_output_dir
+        globals()["OUT_XLSX"] = prev_out_xlsx
+        globals()["OUT_AUDIT"] = prev_out_audit
+        globals()["OUT_PAYITEM_AUDIT"] = prev_out_pay_audit
+
+    return 0
 
 
 def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:

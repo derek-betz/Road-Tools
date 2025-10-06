@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 from PyPDF2 import PdfWriter
-from PyPDF2.generic import DictionaryObject, NameObject
+from PyPDF2.generic import DictionaryObject, NameObject, DecodedStreamObject
 
 
 def create_text_pdf(path: Path, text: str) -> None:
@@ -21,8 +21,10 @@ def create_text_pdf(path: Path, text: str) -> None:
     resources = DictionaryObject({NameObject("/Font"): DictionaryObject({NameObject("/F1"): font_ref})})
     page[NameObject("/Resources")] = resources
     content = f"BT /F1 12 Tf 72 720 Td ({text}) Tj ET"
-    stream = writer._add_object(writer._create_stream(content.encode("utf-8")))
-    page[NameObject("/Contents")] = stream
+    stream = DecodedStreamObject()
+    stream.set_data(content.encode("utf-8"))
+    stream_ref = writer._add_object(stream)
+    page[NameObject("/Contents")] = stream_ref
     with path.open("wb") as handle:
         writer.write(handle)
 
