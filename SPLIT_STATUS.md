@@ -9,12 +9,12 @@
 
 ✅ Each application directory is fully self-contained and ready to be moved
 
-✅ All three repositories have been prepared in `/tmp/repo-split/` with:
-  - CostEstimateGenerator: 165 files committed
-  - submittal-packager: 29 files committed
-  - commitments-reconciler: 12 files committed
+✅ **All three repositories have been prepared in `/tmp/repo-split/` with:**
+  - CostEstimateGenerator: 165 files committed (commit: 9999b73)
+  - submittal-packager: 29 files committed (commit: 8a2d644)
+  - commitments-reconciler: 12 files committed (commit: cd2ce64)
 
-⏳ Ready to push - requires authentication
+⏳ **Ready to push - requires authentication (final step)**
 
 ## Automated Push Options
 
