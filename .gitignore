@@ -1,86 +1,24 @@
-# Global ignore rules
-__pycache__/
-*.py[cod]
-*.so
-*.dylib
-*.egg-info/
-*.egg
-build/
-dist/
-.eggs/
+# This file is deprecated as each application now has its own .gitignore
+# The following directories contain the split applications:
+# - CostEstimateGenerator/
+# - submittal-packager/
+# - commitments-reconciler/
 
-# Environment & tooling
-.env
-.env.local
-.venv/
-.venv*/
-*.code-workspace
-.vscode/
-.idea/
-.pytest_cache/
-.coverage*
-htmlcov/
-.mypy_cache/
-
-# OS-generated files
-.DS_Store
-Thumbs.db
-
-# Project-specific outputs
-CostEstimateGenerator/outputs/*
-!CostEstimateGenerator/outputs/.gitignore
-
-# General OS artifacts
-.DS_Store
-Thumbs.db
-
-# Python specific ignores
+# Global Python ignores (for reference only)
 __pycache__/
 *.py[cod]
 *$py.class
-.python-version
-.venv/
-venv/
-env/
-.Python
 .pytest_cache/
-.coverage*
-.tox/
+.coverage
 .mypy_cache/
-.nox/
-.eggs/
-*.egg-info/
 
-# Build and distribution directories
-build/
-dist/
-htmlcov/
-site/
-
-# Environment and secrets
-.env
-.env.*
-*.pem
-
-# Logs and databases
-*.log
-*.sqlite3
-*.db
-
-# Node and JavaScript dependencies
-node_modules/
-.pnp/
-yarn-error.log
-npm-debug.log*
-yarn-debug.log*
-
-# IDE and editor folders
+# IDE
 .vscode/
 .idea/
-*.swp
-*.swo
+.DS_Store
 
-# Caches
-.cache/
-.tmp/
-main
+# Deprecated directories (will be removed)
+docx/
+openpyxl/
+sandbox/
+

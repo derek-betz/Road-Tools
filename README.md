@@ -1,33 +1,30 @@
 # Road-Tools
 
-A collection of tools for INDOT roadway engineering processes.
+This repository has been restructured to prepare for splitting into separate repositories. Each application is now fully self-contained and ready to be extracted into its own repository.
 
-## Repository Structure
+## Individual Repositories
 
-This repository follows a **one process per folder** principle. Each top-level directory contains a self-contained tool or process with its own:
+- **[CostEstimateGenerator](CostEstimateGenerator/)** - Ingests historical pay-item pricing data, computes summary statistics, and updates estimate workbooks
+- **[submittal-packager](submittal-packager/)** - Python CLI for validating and packaging INDOT roadway plan submittals
+- **[commitments-reconciler](commitments-reconciler/)** - Integration tests and utilities for commitments reconciliation
+
+Each application directory is now self-contained with:
 - README with setup and usage instructions
 - Dependencies and requirements
 - Tests and documentation
 - Configuration files
+- LICENSE file
+- GitHub Actions CI/CD workflows
 
-### Current Tools
+## Extracting Applications
 
-- **[CostEstimateGenerator](CostEstimateGenerator/README.md)** - Ingests historical pay-item pricing data, computes summary statistics, and updates estimate workbooks
-- **[submittal-packager](submittal-packager/README.md)** - Python CLI for validating and packaging INDOT roadway plan submittals
-- **[commitments-reconciler](commitments-reconciler/README.md)** - Integration tests and utilities for commitments reconciliation
+See **[SPLIT_GUIDE.md](SPLIT_GUIDE.md)** for detailed instructions on how to extract each application into its own repository.
 
-## Adding New Processes
+### Quick Extract Steps
 
-When adding a new tool or process to this repository:
+1. Copy the application folder (e.g., `CostEstimateGenerator/`) to a new location
+2. Initialize a new git repository: `git init`
+3. Add and commit all files: `git add . && git commit -m "Initial commit"`
+4. Push to a new GitHub repository
 
-1. Create a new top-level directory for your process
-2. Include a comprehensive README.md with:
-   - Description of the process
-   - Requirements (software, dependencies)
-   - Installation/setup instructions
-   - Usage examples
-   - Testing instructions
-3. Keep the process self-contained with its own dependencies
-4. Follow the established patterns from existing tools
-
-This structure ensures that each process remains independent, maintainable, and easy to understand.
+Each application is ready to function independently with all necessary configuration files included.
