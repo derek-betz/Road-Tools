@@ -1,5 +1,16 @@
 # Road-Tools
 
+**⚠️ Repository Split In Progress**
+
+This repository is being split into three separate repositories. The split is prepared and ready to execute. See [SPLIT_STATUS.md](SPLIT_STATUS.md) for details and instructions.
+
+**New Repositories (Ready to Populate):**
+- [derek-betz/CostEstimateGenerator](https://github.com/derek-betz/CostEstimateGenerator)
+- [derek-betz/submittal-packager](https://github.com/derek-betz/submittal-packager)
+- [derek-betz/commitments-reconciler](https://github.com/derek-betz/commitments-reconciler)
+
+---
+
 This repository has been restructured to prepare for splitting into separate repositories. Each application is now fully self-contained and ready to be extracted into its own repository.
 
 ## Individual Repositories
