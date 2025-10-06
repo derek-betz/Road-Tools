@@ -1,4 +1,4 @@
-# Repository Split - Ready to Execute
+# Repository Split - Ready to Push
 
 ## Status
 
@@ -9,9 +9,42 @@
 
 ✅ Each application directory is fully self-contained and ready to be moved
 
-## Quick Start - Automated Script
+✅ All three repositories have been prepared in `/tmp/repo-split/` with:
+  - CostEstimateGenerator: 165 files committed
+  - submittal-packager: 29 files committed
+  - commitments-reconciler: 12 files committed
 
-The fastest way to complete the split is to run the automated script:
+⏳ Ready to push - requires authentication
+
+## Automated Push Options
+
+### Option 1: GitHub Actions Workflow (Recommended)
+
+A GitHub Actions workflow has been created to automate the split:
+
+1. Go to: https://github.com/derek-betz/Road-Tools/actions/workflows/split-repository.yml
+2. Click "Run workflow"
+3. Type "yes" to confirm
+4. Click "Run workflow" button
+
+**Prerequisites:**
+- Create a Personal Access Token (PAT) with `repo` scope
+- Add it as a repository secret named `SPLIT_REPO_TOKEN`
+- The token must have push access to all three target repositories
+
+### Option 2: Manual Push Script
+
+If the repositories have been prepared in `/tmp/repo-split/`:
+
+```bash
+cd /path/to/Road-Tools
+chmod +x scripts/push_split_repositories.sh
+./scripts/push_split_repositories.sh
+```
+
+### Option 3: Full Automation Script
+
+Run the complete split process locally:
 
 ```bash
 cd /path/to/Road-Tools
