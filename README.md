@@ -1,6 +1,6 @@
 # Road-Tools
 
-This repository has been split into separate repositories for better modularity and maintenance. Each application now has its own dedicated repository:
+This repository has been restructured to prepare for splitting into separate repositories. Each application is now fully self-contained and ready to be extracted into its own repository.
 
 ## Individual Repositories
 
@@ -16,11 +16,15 @@ Each application directory is now self-contained with:
 - LICENSE file
 - GitHub Actions CI/CD workflows
 
-## Migration Note
+## Extracting Applications
 
-Each folder in this repository can be extracted into its own standalone repository. All necessary files (LICENSE, .gitignore, .github/workflows, etc.) have been added to make each application fully independent.
+See **[SPLIT_GUIDE.md](SPLIT_GUIDE.md)** for detailed instructions on how to extract each application into its own repository.
 
-To extract an application into its own repository:
-1. Copy the application folder (e.g., `CostEstimateGenerator/`)
-2. Initialize a new git repository in that folder
-3. The application is ready to use as a standalone repository
+### Quick Extract Steps
+
+1. Copy the application folder (e.g., `CostEstimateGenerator/`) to a new location
+2. Initialize a new git repository: `git init`
+3. Add and commit all files: `git add . && git commit -m "Initial commit"`
+4. Push to a new GitHub repository
+
+Each application is ready to function independently with all necessary configuration files included.
